@@ -8,8 +8,8 @@ namespace WinFormsAppViru
         private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
         private const int MOUSEEVENTF_LEFTUP = 0x0004;
         // metodo que executa o evento de clique
-        [DllImport("user32.dll", 
-            CharSet = CharSet.Auto, 
+        [DllImport("user32.dll",
+            CharSet = CharSet.Auto,
             CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(
             int dwFlags,
@@ -41,6 +41,39 @@ namespace WinFormsAppViru
         public Form1()
         {
             InitializeComponent();
+        }
+
+        // no evento de clique
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // para i igual a 0 até i menor que 10 repita
+            for(int i = 0; i < 100; i++)
+            {
+                // chamando o metodo que mover o curso aleatorio
+                MoverCursor();
+
+                for(int tico = 1; tico <= 2; tico++)
+                {
+                    MouseClicar();
+                }                               
+
+                // Cerebro.Dormir 1 segundo
+                Thread.Sleep(100);
+            }           
+        }
+
+        private void MouseClicar()
+        {
+            // executa o pressionar o botao esquerdo do mouse
+            mouse_event(
+                MOUSEEVENTF_LEFTDOWN, // codigo do evento de pressionar
+                Cursor.Position.X,    // posicao x do cursor
+                Cursor.Position.Y, 0, 0); // posicao y do cursos
+            // executa o soltar o botao esquerdo do mouse
+            mouse_event(
+                MOUSEEVENTF_LEFTUP,  // codigo do evento de soltar o botao
+                Cursor.Position.X,   // posicao x do cursor
+                Cursor.Position.Y, 0, 0); // posicao y do cursor
         }
     }
 }
